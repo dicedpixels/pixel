@@ -3,7 +3,7 @@
     "id": "pixel",
     "version": "${version}",
     "name": "Pixel",
-    "description": "A collection of reusable and essential code snippets for dicedpixel's mods.",
+    "description": "A small library of shared code.",
     "authors": [
         "dicedpixels"
     ],

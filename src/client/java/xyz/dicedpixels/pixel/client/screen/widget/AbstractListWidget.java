@@ -8,6 +8,7 @@ import net.minecraft.util.Identifier;
 
 public abstract class AbstractListWidget<E extends ElementListWidget.Entry<E>> extends ElementListWidget<E> {
     private static final Identifier BACKGROUND = new Identifier("textures/block/stone.png");
+    private static final int SCROLL_BAR_WIDTH = 6;
 
     public AbstractListWidget(MinecraftClient client, int width, int height, int y, int itemHeight) {
         super(client, width, height, y, itemHeight);
@@ -19,18 +20,26 @@ public abstract class AbstractListWidget<E extends ElementListWidget.Entry<E>> e
     }
 
     @Override
+    protected int getScrollbarPositionX() {
+        return getRight() - SCROLL_BAR_WIDTH;
+    }
+
+    @Override
     public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         context.setShaderColor(0.125F, 0.125F, 0.125F, 1.0F);
+
         var x = getX();
         var y = getY();
         var u = (float) getRight();
         var v = (float) (getBottom() + getScrollAmount());
         var right = getRight();
         var bottom = getBottom();
+
         context.drawTexture(backgroundTexture(), x, y, u, v, width, height, 40, 40);
         context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         context.fillGradient(RenderLayer.getGuiOverlay(), x, y, right, y + 5, 0xFF000000, 0, 0);
         context.fillGradient(RenderLayer.getGuiOverlay(), x, bottom - 5, right, bottom, 0, 0xFF000000, 0);
+
         super.renderWidget(context, mouseX, mouseY, delta);
     }
 }
